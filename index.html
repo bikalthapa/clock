@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="icon" type="jpg" href="D:\Bikal Thapa\web project\2.jpg">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+    <title>Bikal Tec | Digital Clock</title>
+
+
+</head>
+<body onload="clocktime()">
+<button onclick="stopwatch()">Stop Watch</button>
+<button onclick="clock()">Clock</button>
+<hr>
+
+<div id="clock" class="invisible">
+<h1>CLOCK</h1>
+<h1 id="headtime"><span id="hour">Hour</span>:<span id="minute"> minute</span>:<span id="second">second</span></h1>
+<h1 id="date">date</h1>
+<h1 id="saluting">Saluting</h1>
+</div>
+
+<div id="stopwatch" class="visible">
+    <h1>Stop Watch</h1>
+    <h1 id="stoptime">0 : 0 : 0 : 0</h1>
+    <button onclick="start()" id="start">Start</button>
+    <button onclick="pause()" id="paused">Pause</button>
+    <button onclick="reset()">Reset</button>
+</div>
+
+
+<script type="text/javascript">
+
+    // including HTML Elements //
+    var second = document.getElementById("second")
+    var hour = document.getElementById("hour");
+    var minute = document.getElementById("minute");
+    var datearea = document.getElementById("date");
+    var salute = document.getElementById("saluting");
+    var timming = document.getElementById("timming");
+    var ssbutton = document.getElementById("ssbtn")
+
+    function show(){
+        // part of a show function for displaying time //
+        var date = new Date();
+        hour.innerHTML = date.getHours();
+        minute.innerHTML = date.getMinutes();
+        second.innerHTML = date.getSeconds();
+        // part of a show function for displaying date //
+        datearea.innerHTML = date.getFullYear()+"/"+date.getMonth()+"/"+date.getDate();
+        // Greeting time condition (good Morning, Afternoon, evening, night, etc.)
+        if (hour.innerHTML>6 & hour.innerHTML<11 & minute.innerHTML<=59) {
+            salute.innerHTML="Good Morning";
+        } else if(hour.innerHTML>=12 & hour.innerHTML<=17){
+            salute.innerHTML = "Good Afternoon";
+        } else if(hour.innerHTML>=17 & hour.innerHTML<=19 & minute.innerHTML<=59){
+            salute.innerHTML = "Good Evening";
+        } else if(hour.innerHTML>=20 & hour.innerHTML<=24){
+            salute.innerHTML = "Good Night";
+        } else if(hour.innerHTML>=1 & hour.innerHTML<=5 & minute.innerHTML<=59){
+            salute.innerHTML = "Good Night";
+        } else{
+            salute.innerHTML = "";
+        };
+    };
+
+
+    function stopwatch(){
+        // including html elements for stop watch //
+        var stopwatchdiv = document.getElementById("stopwatch");
+        var clockdiv = document.getElementById("clock");
+
+        stopwatchdiv.classList.remove("invisible");
+        stopwatchdiv.classList.add("visible");
+
+        clockdiv.classList.remove("visible");
+        clockdiv.classList.add("invisible");
+    };
+
+    function clock(){
+        var clockdiv = document.getElementById("clock");
+        var stopwatchdiv = document.getElementById("stopwatch");
+
+        clockdiv.classList.remove("invisible");
+        clockdiv.classList.add("visible");
+
+        stopwatchdiv.classList.remove("visible");
+        stopwatchdiv.classList.add("invisible");
+    };
+
+    function clocktime(){
+        setInterval(show,1000);
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // including HTML Elements in javascript for WtopWatch
+    var stoptime = document.getElementById("stoptime");
+    var startbtn = document.getElementById("start");
+    var pausedbtn = document.getElementById("paused");
+    var ms = 0;
+    var sec = 0;
+    var min = 0;
+    var hr = 0;
+    var realtime;
+
+function start(){
+    function timeout(){
+        ms++;
+        if(ms == 100){
+            sec = sec + 1;
+            ms = 00;
+        };
+        if(sec == 60){
+            min = min + 1;
+            sec = 00;
+        };
+        if(min ==60){
+            hr = hr + 1;
+            min = 00;
+        };
+        if(ms<10){
+            ms = "0" + ms;
+        };
+        stoptime.innerHTML = hr + " : " + min + " : " + sec + " : " + ms;
+    };
+    startbtn.disabled = true;
+    pausedbtn.disabled = false;
+    realtime = setInterval(timeout,10);
+    stoptime.innerHTML = realtime;
+};
+
+
+function reset(){
+clearInterval(realtime);
+startbtn.disabled = false;
+pausedbtn.disabled = false;
+stoptime.innerHTML = "0 : 0 : 0 : 0";
+ms = 0;
+sec = 0;
+hr = 0;
+min = 0;
+};
+
+
+
+function pause(){
+clearInterval(realtime);
+startbtn.disabled = false;
+pausedbtn.disabled = true;
+};
+</script>
+
+</body>
+</html>
